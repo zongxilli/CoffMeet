@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faReact,
 	faChrome,
-    faHornbill,
-    faScribd,
+	faHornbill,
+	faScribd,
 } from '@fortawesome/free-brands-svg-icons';
 
-export default function NavBar() {
+export default function NavBar({ setFormOpen }) {
 	return (
 		<Menu inverted fixed="top">
 			<Container>
@@ -27,7 +27,12 @@ export default function NavBar() {
 				</Menu.Item>
 				<Menu.Item name="Events" />
 				<Menu.Item>
-					<Button positive inverted content="Create Event" />
+					<Button
+						positive
+						inverted
+						content="Create Event"
+						onClick={() => setFormOpen(true)}
+					/>
 				</Menu.Item>
 				<Menu.Item position="right">
 					<Button basic inverted content="Login" />
