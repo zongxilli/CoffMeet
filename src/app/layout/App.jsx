@@ -1,10 +1,15 @@
+import { Container } from 'semantic-ui-react';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>LetusMeet</h1>
-    </div>
-  );
+import EventDashboard from '../../features/events/eventDashboard/EventDashboard';
+import NavBar from '../../features/nav/NavBar';
+
+export default function App() {
+	return (
+		<>
+			<NavBar />
+			<Container className="main">
+				<EventDashboard />
+			</Container>
+		</>
+	);
 }
-
-export default App;
