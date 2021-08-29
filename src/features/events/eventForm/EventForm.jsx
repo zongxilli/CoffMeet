@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import cuid from 'cuid';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createEvent, updateEvent } from '../eventAction';
 
-export default function EventForm({
-	setFormOpen,
-	setEvents,
-	createEvent,
-	selectedEvent,
-	updateEvent,
-}) {
+export default function EventForm({ match, history }) {
+	const dispatch = useDispatch();
+
+	const selectedEvent = useSelector((state) =>
+		state.event.events.find((evt) => evt.id === match.params.id)
+	);
+
 	const initialValues = selectedEvent ?? {
 		title: '',
 		category: '',
@@ -23,15 +25,17 @@ export default function EventForm({
 
 	function onSubmitHandler() {
 		selectedEvent
-			? updateEvent({ ...selectedEvent, ...values })
-			: createEvent({
-					...values,
-					id: cuid(),
-					hostedBy: 'Kenny',
-					attendees: [],
-					hostPhotoURL: 'assets/user.png',
-			  });
-		setFormOpen(false);
+			? dispatch(updateEvent({ ...selectedEvent, ...values }))
+			: dispatch(
+					createEvent({
+						...values,
+						id: cuid(),
+						hostedBy: 'Kenny',
+						attendees: [],
+						hostPhotoURL: 'assets/user.png',
+					})
+			  );
+		history.push('/events');
 	}
 
 	function onChangeHandler(e) {
@@ -41,69 +45,78 @@ export default function EventForm({
 
 	return (
 		<Segment clearing>
-			<Header content={selectedEvent ? 'Edit the event' : 'Create new event'} />
+			<Header
+				content={
+					selectedEvent ? 'Edit the event' : 'Create new event'
+				}
+			/>
 			<Form onSubmit={onSubmitHandler}>
 				<Form.Field>
 					<input
-						type="text"
-						placeholder="Event"
-						name="title"
+						type='text'
+						placeholder='Event'
+						name='title'
 						value={values.title}
 						onChange={(e) => onChangeHandler(e)}
 					/>
 				</Form.Field>
 				<Form.Field>
 					<input
-						type="text"
-						placeholder="Category"
-						name="category"
+						type='text'
+						placeholder='Category'
+						name='category'
 						value={values.category}
 						onChange={(e) => onChangeHandler(e)}
 					/>
 				</Form.Field>
 				<Form.Field>
 					<input
-						type="text"
-						placeholder="Description"
-						name="description"
+						type='text'
+						placeholder='Description'
+						name='description'
 						value={values.description}
 						onChange={(e) => onChangeHandler(e)}
 					/>
 				</Form.Field>
 				<Form.Field>
 					<input
-						type="text"
-						placeholder="City"
-						name="city"
+						type='text'
+						placeholder='City'
+						name='city'
 						value={values.city}
 						onChange={(e) => onChangeHandler(e)}
 					/>
 				</Form.Field>
 				<Form.Field>
 					<input
-						type="text"
-						placeholder="Venue"
-						name="venue"
+						type='text'
+						placeholder='Venue'
+						name='venue'
 						value={values.venue}
 						onChange={(e) => onChangeHandler(e)}
 					/>
 				</Form.Field>
 				<Form.Field>
 					<input
-						type="date"
-						placeholder="Date"
-						name="date"
+						type='date'
+						placeholder='Date'
+						name='date'
 						value={values.date}
 						onChange={(e) => onChangeHandler(e)}
 					/>
 				</Form.Field>
-				<Button type="submit" floated="right" positive content="Submit" />
+				<Button
+					type='submit'
+					floated='right'
+					positive
+					content='Submit'
+				/>
 				<Button
 					as={Link}
-					to="/events"
-					type="submit"
-					floated="right"
-					content="Cancel"
+					to='/events'
+					type='submit'
+					floated='right'
+					content='Cancel'
 				/>
 			</Form>
 		</Segment>

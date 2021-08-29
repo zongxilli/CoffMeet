@@ -19,7 +19,7 @@ export default function eventReducer(
 			return {
 				...state,
 				events: [
-					...state.events.filter((event) => event.id !== payload.id),
+					...state.events.filter((evt) => evt.id !== payload.id),
 					payload,
 				],
 			};
@@ -28,7 +28,7 @@ export default function eventReducer(
 			return {
 				...state,
 				events: [
-					...state.events.filter((event) => event.id !== payload),
+					...state.events.filter((evt) => evt.id !== payload),
 				],
 			};
             
