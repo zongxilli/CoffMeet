@@ -4,10 +4,10 @@ import { Button, Grid, Icon, Segment } from 'semantic-ui-react';
 export default function EventDetailedInfo() {
 	return (
 		<Segment.Group>
-			<Segment attached="top">
+			<Segment attached='top'>
 				<Grid>
 					<Grid.Column width={1}>
-						<Icon size="large" color="pink" name="info" />
+						<Icon size='large' color='pink' name='info' />
 					</Grid.Column>
 					<Grid.Column width={15}>
 						<p>Event Description</p>
@@ -15,9 +15,9 @@ export default function EventDetailedInfo() {
 				</Grid>
 			</Segment>
 			<Segment attached>
-				<Grid verticalAlign="middle">
+				<Grid verticalAlign='middle'>
 					<Grid.Column width={1}>
-						<Icon name="calendar" size="large" color="pink" />
+						<Icon name='calendar' size='large' color='pink' />
 					</Grid.Column>
 					<Grid.Column width={15}>
 						<span>Event Date</span>
@@ -25,15 +25,15 @@ export default function EventDetailedInfo() {
 				</Grid>
 			</Segment>
 			<Segment attached>
-				<Grid verticalAlign="middle">
+				<Grid verticalAlign='middle'>
 					<Grid.Column width={1}>
-						<Icon name="marker" size="large" color="pink" />
+						<Icon name='marker' size='large' color='pink' />
 					</Grid.Column>
 					<Grid.Column width={11}>
 						<span>Event Venue</span>
 					</Grid.Column>
 					<Grid.Column width={4}>
-						<Button color="teal" size="tiny" content="Show Map" />
+						<Button color='teal' size='tiny' content='Show Map' />
 					</Grid.Column>
 				</Grid>
 			</Segment>
