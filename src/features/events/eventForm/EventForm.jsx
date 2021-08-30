@@ -1,3 +1,4 @@
+/* global google */
 import React from 'react';
 import cuid from 'cuid';
 import { Button, Header, Segment } from 'semantic-ui-react';
@@ -11,6 +12,7 @@ import TextAreaComponent from '../../../app/common/form/TextAreaComponent';
 import SelectInputComponent from '../../../app/common/form/SelectedInputComponent';
 import DateInputComponent from '../../../app/common/form/DateInputComponent';
 import { categoryData } from '../../../app/api/categoryOptions';
+import PlaceInputComponent from '../../../app/common/form/PlaceInputComponent';
 
 export default function EventForm({ match, history }) {
 	const dispatch = useDispatch();
@@ -23,8 +25,14 @@ export default function EventForm({ match, history }) {
 		title: '',
 		category: '',
 		description: '',
-		city: '',
-		venue: '',
+		city: {
+			address: '',
+			latLng: null,
+		},
+		venue: {
+			address: '',
+			latLng: null,
+		},
 		date: '',
 	};
 
@@ -36,8 +44,14 @@ export default function EventForm({ match, history }) {
 		description: Yup.string().required(
 			'You forget to provide DESCRIPTION :)'
 		),
-		city: Yup.string().required('You forget to provide CITY :)'),
-		venue: Yup.string().required('You forget to provide VENUE :)'),
+		city: Yup.object().shape({
+			address: Yup.string().required('You forget to provide CITY :)'),
+		}),
+		venue: Yup.object().shape({
+			address: Yup.string().required(
+				'You forget to provide VENUE :)'
+			),
+		}),
 		date: Yup.string().required('You forget to select DATE :)'),
 	});
 
@@ -61,7 +75,7 @@ export default function EventForm({ match, history }) {
 					history.push('/events');
 				}}
 			>
-				{({ isSubmitting, dirty, isValid }) => (
+				{({ isSubmitting, dirty, isValid, values }) => (
 					<Form className='ui form'>
 						<Header sub color='teal' content='Event Details' />
 
@@ -84,8 +98,17 @@ export default function EventForm({ match, history }) {
 							color='teal'
 							content='Event Location Details'
 						/>
-						<TextInputComponent name='city' placeholder='City' />
-						<TextInputComponent name='venue' placeholder='Venue' />
+						<PlaceInputComponent name='city' placeholder='City' />
+						<PlaceInputComponent
+							name='venue'
+							disabled={!values.city.latLng}
+							placeholder='Venue'
+							options={{
+								location: new google.maps.LatLng(values.city.latLng),
+								radius: 1000,
+								types: ['establishment'],
+							}}
+						/>
 						<DateInputComponent
 							name='date'
 							placeholderText='Event date'
