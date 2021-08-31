@@ -1,3 +1,26 @@
+import { fetchSampleData } from '../../app/api/mockAPI';
+import {
+	asyncActionError,
+	asyncActionFinish,
+	asyncActionStart,
+} from '../../app/async/asyncReducer';
+
+export function loadEvents() {
+	return async function (dispatch) {
+		dispatch(asyncActionStart());
+
+		try {
+			const events = await fetchSampleData();
+
+			dispatch({ type: 'FETCH_EVENTS', payload: events });
+
+			dispatch(asyncActionFinish());
+		} catch (error) {
+			dispatch(asyncActionError(error));
+		}
+	};
+}
+
 export function createEvent(event) {
 	return {
 		type: 'CREATE_EVENT',

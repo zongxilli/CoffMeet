@@ -1,7 +1,7 @@
 import { sampleData } from '../../app/api/sampleData';
 
 const initialState = {
-	events: sampleData,
+	events: [],
 };
 
 export default function eventReducer(
@@ -27,11 +27,15 @@ export default function eventReducer(
 		case 'DELETE_EVENT':
 			return {
 				...state,
-				events: [
-					...state.events.filter((evt) => evt.id !== payload),
-				],
+				events: [...state.events.filter((evt) => evt.id !== payload)],
 			};
-            
+
+		case 'FETCH_EVENTS':
+			return {
+				...state,
+				events: payload,
+			};
+
 		default:
 			return state;
 	}
