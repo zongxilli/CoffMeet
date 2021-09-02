@@ -1,5 +1,5 @@
 {
-  "name": "letusmeet",
+  "name": "CoffMeet",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^12.1.10",
     "cuid": "^2.1.8",
     "date-fns": "2.23.0",
+    "firebase": "^9.0.1",
     "formik": "^2.2.9",
     "google-map-react": "^2.1.10",
     "react": "^17.0.2",

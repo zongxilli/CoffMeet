@@ -29,7 +29,7 @@ export default function HomePage({ history }) {
 			<Container>
 				<Header as='h1' inverted>
 					<FontAwesomeIcon
-						icon={faHornbill}
+						icon={faReact}
 						color='white'
 						opacity='1'
 						style={{ marginRight: '0.5rem' }}

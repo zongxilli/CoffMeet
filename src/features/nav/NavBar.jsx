@@ -23,7 +23,7 @@ export default function NavBar({ setFormOpen }) {
 			<Container>
 				<Menu.Item as={NavLink} exact to='/' header>
 					<FontAwesomeIcon
-						icon={faHornbill}
+						icon={faReact}
 						size='2x'
 						color='white'
 						opacity='1'
