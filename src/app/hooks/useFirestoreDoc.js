@@ -8,10 +8,17 @@ import { dataFromSnapshot } from '../firestore/firestoreService';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-export default function useFirestoreDoc({ query, data, deps }) {
+export default function useFirestoreDoc({
+	query,
+	data,
+	deps,
+	shouldExecute = true,
+}) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		if (!shouldExecute) return;
+
 		dispatch(asyncActionStart());
 
 		const unsubscribe = query().onSnapshot(
@@ -34,5 +41,5 @@ export default function useFirestoreDoc({ query, data, deps }) {
 		return () => {
 			unsubscribe();
 		};
-	}, deps);
+	}, deps); // eslint-disable-line react-hooks/exhaustive-deps
 }
