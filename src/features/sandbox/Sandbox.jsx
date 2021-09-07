@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+import { Button, Header, Modal, Progress } from 'semantic-ui-react';
 import { openModal } from '../../app/common/modals/modalReducer';
 import TestMap from './TestMap';
 import TestPlaceInput from './TestPlaceInput';
@@ -28,6 +28,38 @@ export default function Sandbox() {
 			center: { lat: latLng.lat, lng: latLng.lng },
 		});
 	}
+
+
+
+
+
+
+
+
+
+
+
+	const [open, setOpen] = useState(false);
+
+	const [percent, setPercent] = useState(0);
+
+	const startProgress = async () => {
+
+		setPercent(100);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	return (
 		<>
@@ -65,6 +97,33 @@ export default function Sandbox() {
 					)
 				}
 			/>
+{/** ---------------------------------------------------------------------------- */}
+			<Modal
+				onClose={() => setOpen(false)}
+				onOpen={() => setOpen(true)}
+				open={open}
+				trigger={<Button primary>Open Modal with async logic</Button>}
+			>
+				<Modal.Header>Basic Modal</Modal.Header>
+				<Modal.Content>
+					<p>Some contents...</p>
+					<p>Some contents...</p>
+					<p>Some contents...</p>
+				</Modal.Content>
+				<Modal.Actions>
+					<Button onClick={() => setOpen(false)}>取消</Button>
+					<Button
+						content='确认'
+						onClick={() => setOpen(false)}
+						primary
+					/>
+				</Modal.Actions>
+			</Modal>
+
+			<Progress percent={percent} />
+			<Button onClick={startProgress} content='start' />
+
+{/** ---------------------------------------------------------------------------- */}
 			<div style={{ marginTop: 15 }}>
 				<TestPlaceInput setLocationHandler={setLocationHandler} />
 				<TestMap location={location} />

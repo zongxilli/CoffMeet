@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, List, Segment } from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee';
-import { deleteEvent } from '../eventAction';
+import { deleteEvent } from '../eventActions';
 import { format } from 'date-fns';
 
 export default function EventListItem({ event }) {

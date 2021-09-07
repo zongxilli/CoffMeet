@@ -4,7 +4,7 @@ import cuid from 'cuid';
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createEvent, updateEvent } from '../eventAction';
+import { createEvent, updateEvent } from '../eventActions';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextInputComponent from '../../../app/common/form/TextInputComponent';
