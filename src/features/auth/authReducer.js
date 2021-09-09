@@ -1,9 +1,6 @@
 const initialState = {
-	authenticated: true,
-	currentUser: {
-		email: 'zongxi2014@gmail.com',
-		photoURL: '/assets/user.png',
-	},
+	authenticated: false,
+	currentUser: null,
 };
 
 export default function authReducer(
