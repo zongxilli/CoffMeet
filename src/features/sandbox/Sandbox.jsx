@@ -29,38 +29,6 @@ export default function Sandbox() {
 		});
 	}
 
-
-
-
-
-
-
-
-
-
-
-	const [open, setOpen] = useState(false);
-
-	const [percent, setPercent] = useState(0);
-
-	const startProgress = async () => {
-
-		setPercent(100);
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	return (
 		<>
 			<h1>Testing 123</h1>
@@ -97,33 +65,7 @@ export default function Sandbox() {
 					)
 				}
 			/>
-{/** ---------------------------------------------------------------------------- */}
-			<Modal
-				onClose={() => setOpen(false)}
-				onOpen={() => setOpen(true)}
-				open={open}
-				trigger={<Button primary>Open Modal with async logic</Button>}
-			>
-				<Modal.Header>Basic Modal</Modal.Header>
-				<Modal.Content>
-					<p>Some contents...</p>
-					<p>Some contents...</p>
-					<p>Some contents...</p>
-				</Modal.Content>
-				<Modal.Actions>
-					<Button onClick={() => setOpen(false)}>取消</Button>
-					<Button
-						content='确认'
-						onClick={() => setOpen(false)}
-						primary
-					/>
-				</Modal.Actions>
-			</Modal>
 
-			<Progress percent={percent} />
-			<Button onClick={startProgress} content='start' />
-
-{/** ---------------------------------------------------------------------------- */}
 			<div style={{ marginTop: 15 }}>
 				<TestPlaceInput setLocationHandler={setLocationHandler} />
 				<TestMap location={location} />
