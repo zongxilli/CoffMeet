@@ -52,6 +52,18 @@ export function deleteEventInFirestore(eventId) {
 
 export function cancelEventToggle(event) {
 	return db.collection('events').doc(event.id).update({
-		isCancelled: !event.isCancelled
-	})
+		isCancelled: !event.isCancelled,
+	});
+}
+
+export function setUserProfileData(user) {
+	return db
+		.collection('users')
+		.doc(user.uid)
+		.set({
+			displayName: user.displayName,
+			email: user.email,
+			photoURL: user.photoURL || null,
+			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+		});
 }
