@@ -20,12 +20,10 @@ export function asyncActionError(error) {
 const initialState = {
 	loading: false,
 	error: null,
+	initialized: false,
 };
 
-export default function asyncReducer(
-	state = initialState,
-	{ type, payload }
-) {
+export default function asyncReducer(state = initialState, { type, payload }) {
 	switch (type) {
 		case 'ASYNC_ACTION_START':
 			return {
@@ -45,6 +43,12 @@ export default function asyncReducer(
 				...state,
 				loading: false,
 				error: payload,
+			};
+
+		case 'APP_LOADED':
+			return {
+				...state,
+				initialized: true,
 			};
 
 		default:
