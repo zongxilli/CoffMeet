@@ -4,3 +4,10 @@ export function listenToCurrentUserProfile(profile) {
 		payload: profile,
 	};
 }
+
+export function listenToSelectedUserProfile(profile) {
+	return {
+		type: 'LISTEN_TO_SELECTED_USER_PROFILE',
+		payload: profile,
+	};
+}

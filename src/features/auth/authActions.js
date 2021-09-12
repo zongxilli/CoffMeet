@@ -1,4 +1,9 @@
 import firebase from '../../app/config/firebase';
+import {
+	dataFromSnapshot,
+	getUserProfile,
+} from '../../app/firestore/firestoreService';
+import { listenToCurrentUserProfile } from '../profiles/profileActions';
 
 export function signInUser(user) {
 	return {
@@ -12,10 +17,14 @@ export function verifyAuth() {
 		return firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				dispatch(signInUser(user));
-				dispatch({type: 'APP_LOADED'})
+				const profileRef = getUserProfile(user.uid);
+				profileRef.onSnapshot((snapshot) => {
+					dispatch(listenToCurrentUserProfile(dataFromSnapshot(snapshot)));
+					dispatch({ type: 'APP_LOADED' });
+				});
 			} else {
 				dispatch(signOutUser());
-				dispatch({type: 'APP_LOADED'})
+				dispatch({ type: 'APP_LOADED' });
 			}
 		});
 	};
