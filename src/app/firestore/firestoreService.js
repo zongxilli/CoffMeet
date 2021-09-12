@@ -130,3 +130,14 @@ export async function setMainPhoto(photo) {
 		throw err;
 	}
 }
+
+export function deletePhotoFromCollection(photoId) {
+	const userUid = firebase.auth().currentUser.uid;
+
+	return db
+		.collection('users')
+		.doc(userUid)
+		.collection('photos')
+		.doc(photoId)
+		.delete();
+}

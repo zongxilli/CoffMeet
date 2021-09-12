@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Button, Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
 import PhotoUploadWidget from '../../../app/common/photos/PhotoUploadWidget';
+import { deleteFromFirebaseStorage } from '../../../app/firestore/firebaseService';
 import {
+	deletePhotoFromCollection,
 	getUserPhotos,
 	setMainPhoto,
 } from '../../../app/firestore/firestoreService';
@@ -17,6 +19,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 
 	const [editMode, setEditMode] = useState(false);
 	const [updating, setUpdating] = useState({ isUpdating: false, target: null });
+	const [deleting, setDeleting] = useState({ isDeleting: false, target: null });
 
 	useFirestoreCollection({
 		query: () => getUserPhotos(profile.id),
@@ -33,6 +36,19 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 			toast.error(err.message);
 		} finally {
 			setUpdating({ isUpdating: false, target: null });
+		}
+	}
+
+	async function deletePhotoHandler(photo, target) {
+		setDeleting({ isDeleting: true, target: target });
+
+		try {
+			await deleteFromFirebaseStorage(photo.name);
+			await deletePhotoFromCollection(photo.id);
+		} catch (err) {
+			toast.error(err.message);
+		} finally {
+			setDeleting({ isDeleting: false, target: null });
 		}
 	}
 
@@ -67,9 +83,20 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 											loading={
 												updating.isUpdating && updating.target === photo.id
 											}
+											disabled={photo.url === profile.photoURL}
 											onClick={(e) => setMainPhotoHandler(photo, e.target.name)}
 										/>
-										<Button basic color='red' icon='trash' />
+										<Button
+											basic
+											name={photo.id}
+											color='red'
+											icon='trash'
+											loading={
+												deleting.isDeleting && deleting.target === photo.id
+											}
+											disabled={photo.url === profile.photoURL}
+											onClick={(e) => deletePhotoHandler(photo, e.target.name)}
+										/>
 									</Button.Group>
 								</Card>
 							))}
