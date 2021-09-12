@@ -86,3 +86,27 @@ export async function updateUserProfile(profile) {
 		throw err;
 	}
 }
+
+export async function updateUserProfilePhoto(downloadURL, filename) {
+	const user = firebase.auth().currentUser;
+	const userDocRef = db.collection('users').doc(user.uid);
+
+	try {
+		const userDoc = await userDocRef.get();
+		if (!userDoc.data().photoURL) {
+			await db.collection('users').doc(user.uid).update({
+				photoURL: downloadURL,
+			});
+			await user.updateProfile({
+				photoURL: downloadURL,
+			});
+		}
+
+		return await db.collection('users').doc(user.uid).collection('photos').add({
+			name: filename,
+			url: downloadURL,
+		});
+	} catch (err) {
+		throw err;
+	}
+}
