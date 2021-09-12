@@ -114,3 +114,19 @@ export async function updateUserProfilePhoto(downloadURL, filename) {
 export function getUserPhotos(userUid) {
 	return db.collection('users').doc(userUid).collection('photos');
 }
+
+export async function setMainPhoto(photo) {
+	const user = firebase.auth().currentUser;
+
+	try {
+		await db.collection('users').doc(user.uid).update({
+			photoURL: photo.url,
+		});
+
+		return await user.updateProfile({
+			photoURL: photo.url,
+		});
+	} catch (err) {
+		throw err;
+	}
+}

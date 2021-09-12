@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { Button, Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
 import PhotoUploadWidget from '../../../app/common/photos/PhotoUploadWidget';
-import { getUserPhotos } from '../../../app/firestore/firestoreService';
+import {
+	getUserPhotos,
+	setMainPhoto,
+} from '../../../app/firestore/firestoreService';
 import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
 import { listenToUserPhotos } from '../profileActions';
 
@@ -12,12 +16,25 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 	const { photos } = useSelector((state) => state.profile);
 
 	const [editMode, setEditMode] = useState(false);
+	const [updating, setUpdating] = useState({ isUpdating: false, target: null });
 
 	useFirestoreCollection({
 		query: () => getUserPhotos(profile.id),
 		data: (photos) => dispatch(listenToUserPhotos(photos)),
 		deps: [profile.id, dispatch],
 	});
+
+	async function setMainPhotoHandler(photo, target) {
+		setUpdating({ isUpdating: true, target: target });
+
+		try {
+			await setMainPhoto(photo);
+		} catch (err) {
+			toast.error(err.message);
+		} finally {
+			setUpdating({ isUpdating: false, target: null });
+		}
+	}
 
 	return (
 		<Tab.Pane loading={loading}>
@@ -42,7 +59,16 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 								<Card key={photo.id}>
 									<Image src={photo.url} />
 									<Button.Group fluid width={2}>
-										<Button basic color='green' content='Main' />
+										<Button
+											basic
+											name={photo.id}
+											color='green'
+											content='Main'
+											loading={
+												updating.isUpdating && updating.target === photo.id
+											}
+											onClick={(e) => setMainPhotoHandler(photo, e.target.name)}
+										/>
 										<Button basic color='red' icon='trash' />
 									</Button.Group>
 								</Card>
