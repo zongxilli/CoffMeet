@@ -11,3 +11,10 @@ export function listenToSelectedUserProfile(profile) {
 		payload: profile,
 	};
 }
+
+export function listenToUserPhotos(photos) {
+	return {
+		type: 'LISTEN_TO_USER_PHOTOS',
+		payload: photos,
+	};
+}

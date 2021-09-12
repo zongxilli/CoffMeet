@@ -110,3 +110,7 @@ export async function updateUserProfilePhoto(downloadURL, filename) {
 		throw err;
 	}
 }
+
+export function getUserPhotos(userUid) {
+	return db.collection('users').doc(userUid).collection('photos');
+}

@@ -1,6 +1,7 @@
 const initialState = {
 	currentUserProfile: null,
 	selectedUserProfile: null,
+	photos: [],
 };
 
 export default function profileReducer(
@@ -18,6 +19,12 @@ export default function profileReducer(
 			return {
 				...state,
 				selectedUserProfile: payload,
+			};
+
+		case 'LISTEN_TO_USER_PHOTOS':
+			return {
+				...state,
+				photos: payload,
 			};
 
 		default: {
