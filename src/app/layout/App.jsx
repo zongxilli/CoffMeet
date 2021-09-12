@@ -14,6 +14,7 @@ import ModalManager from '../common/modals/ModalManager';
 import ErrorComponent from '../common/errors/ErrorComponent';
 import AccountPage from '../../features/auth/accountPage';
 import LoadingComponent from './LoadingComponent';
+import ProfilePage from '../../features/profiles/profilePage/ProfilePage';
 
 export default function App() {
 	const { key } = useLocation();
@@ -41,6 +42,7 @@ export default function App() {
 								key={key}
 							/>
 							<Route path='/account' component={AccountPage} />
+							<Route path='/profile/:id' component={ProfilePage} />
 							<Route path='/error' component={ErrorComponent} />
 						</Container>
 					</>
