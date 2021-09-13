@@ -8,11 +8,7 @@ import { dataFromSnapshot } from '../firestore/firestoreService';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-export default function useFirestoreCollection({
-	query,
-	data,
-	deps,
-}) {
+export default function useFirestoreCollection({ query, data, deps }) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -20,17 +16,15 @@ export default function useFirestoreCollection({
 
 		const unsubscribe = query().onSnapshot(
 			(snapshot) => {
-				const docs = snapshot.docs.map((doc) =>
-					dataFromSnapshot(doc)
-				);
+				const docs = snapshot.docs.map((doc) => dataFromSnapshot(doc));
 				data(docs);
 				dispatch(asyncActionFinish());
 			},
-			(error) => dispatch(asyncActionError())
+			(error) => dispatch(asyncActionError(error))
 		);
 
 		return () => {
 			unsubscribe();
 		};
-	}, deps);
+	}, deps); // eslint-disable-line react-hooks/exhaustive-deps
 }
