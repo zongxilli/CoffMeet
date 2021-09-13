@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-	Button,
-	Header,
-	Image,
-	Item,
-	Segment,
-} from 'semantic-ui-react';
+import { Button, Header, Image, Item, Segment } from 'semantic-ui-react';
 import { format } from 'date-fns';
+import { toast } from 'react-toastify';
+import { addUserAttendance } from '../../../app/firestore/firestoreService';
 
 const eventImageStyle = {
 	filter: 'brightness(30%)',
@@ -22,7 +18,21 @@ const eventImageTextStyle = {
 	color: 'white',
 };
 
-export default function EventDetailedHeader({ event }) {
+export default function EventDetailedHeader({ event, isHost, isGoing }) {
+	const [loading, setLoading] = useState(false);
+
+	async function userJoinEventHandler() {
+		setLoading(true);
+
+		try {
+			await addUserAttendance(event);
+		} catch (err) {
+			toast.error(err.message);
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	return (
 		<Segment.Group>
 			<Segment basic attached='top' style={{ padding: '0' }}>
@@ -51,17 +61,33 @@ export default function EventDetailedHeader({ event }) {
 				</Segment>
 			</Segment>
 
-			<Segment attached='bottom'>
-				<Button color='pink'>JOIN THIS EVENT</Button>
-				<Button>Cancel My Place</Button>
-				<Button
-					as={Link}
-					to={`/manage/${event.id}`}
-					color='teal'
-					floated='right'
-				>
-					Manage Event
-				</Button>
+			<Segment attached='bottom' clearing>
+				{!isHost && (
+					<>
+						{isGoing ? (
+							<Button>Cancel My Place</Button>
+						) : (
+							<Button
+								color='pink'
+								loading={loading}
+								onClick={userJoinEventHandler}
+							>
+								JOIN THIS EVENT
+							</Button>
+						)}
+					</>
+				)}
+
+				{isHost && (
+					<Button
+						as={Link}
+						to={`/manage/${event.id}`}
+						color='teal'
+						floated='right'
+					>
+						Manage Event
+					</Button>
+				)}
 			</Segment>
 		</Segment.Group>
 	);

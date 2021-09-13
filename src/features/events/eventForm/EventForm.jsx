@@ -180,7 +180,7 @@ export default function EventForm({ match, history }) {
 							to='/events'
 							type='submit'
 							floated='right'
-							content='Cancel'
+							content='Back'
 						/>
 					</Form>
 				)}
