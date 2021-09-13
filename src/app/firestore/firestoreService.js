@@ -196,3 +196,25 @@ export async function cancelUserAttendance(event) {
 		throw err;
 	}
 }
+
+export function getUserEventsQuery(activeTab, userUid) {
+	let eventsRef = db.collection('events');
+	const today = new Date();
+
+	switch (activeTab) {
+		case 1: // past events
+			return eventsRef
+				.where('attendeeIds', 'array-contains', userUid)
+				.where('date', '<=', today)
+				.orderBy('date', 'desc');
+
+		case 2: // hosting
+			return eventsRef.where('hostUid', '==', userUid).orderBy('date');
+
+		default:
+			return eventsRef
+				.where('attendeeIds', 'array-contains', userUid)
+				.where('date', '>=', today)
+				.orderBy('date');
+	}
+}

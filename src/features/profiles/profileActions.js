@@ -18,3 +18,10 @@ export function listenToUserPhotos(photos) {
 		payload: photos,
 	};
 }
+
+export function listenToUserEvents(events) {
+	return {
+		type: 'LISTEN_TO_USER_EVENTS',
+		payload: events,
+	};
+}

@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
+import { Card, Grid, Header, Image, Tab } from 'semantic-ui-react';
 import { format } from 'date-fns';
-import ProfileForm from './ProfileForm';
-import { Link } from 'react-router-dom';
 
-export default function EventsTab({ profile, isCurrentUser }) {
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import useFirestoreCollection from '../../../app/hooks/useFirestoreCollection';
+import { getUserEventsQuery } from '../../../app/firestore/firestoreService';
+import { listenToUserEvents } from '../profileActions';
+
+export default function EventsTab({ profile }) {
+	const dispatch = useDispatch();
+
+	const { profileEvents } = useSelector((state) => state.profile);
+	const { loading } = useSelector((state) => state.async);
 	const [activeTab, setActiveTab] = useState(0);
+
+	useFirestoreCollection({
+		query: () => getUserEventsQuery(activeTab, profile.id),
+		data: (events) => dispatch(listenToUserEvents(events)),
+		deps: [dispatch, activeTab, profile.id],
+	});
+
 	const panes = [
 		{ menuItem: 'Future Events', pane: { key: 'future' } },
 		{ menuItem: 'Past Events', pane: { key: 'past' } },
@@ -25,19 +40,21 @@ export default function EventsTab({ profile, isCurrentUser }) {
 						onTabChange={(e, data) => setActiveTab(data.activeIndex)}
 					/>
 					<Card.Group itemsPerRow={5} style={{ marginTop: '10px' }}>
-						<Card as={Link} to={`/events`}>
-							<Image
-								src='/assets/categoryImages/drinks.jpg'
-								style={{ minHeight: '100px', objectFit: 'cover' }}
-							/>
-							<Card.Content>
-								<Card.Header content='Title' textAlign='center' />
-								<Card.Meta textAlign='center'>
-									<div>Date</div>
-									<div>Time</div>
-								</Card.Meta>
-							</Card.Content>
-						</Card>
+						{profileEvents.map((event) => (
+							<Card as={Link} to={`/events/${event.id}`} key={event.id}>
+								<Image
+									src={`/assets/categoryImages/${event.category}.jpg`}
+									style={{ minHeight: '100px', objectFit: 'cover' }}
+								/>
+								<Card.Content>
+									<Card.Header content={event.title} textAlign='center' />
+									<Card.Meta textAlign='center'>
+										<div>{format(event.date, 'dd MMM yyyy')}</div>
+										<div>{format(event.date, 'hh:mm a')}</div>
+									</Card.Meta>
+								</Card.Content>
+							</Card>
+						))}
 					</Card.Group>
 				</Grid.Column>
 			</Grid>
