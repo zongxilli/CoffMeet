@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button, Header, Image, Item, Segment } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
-import { addUserAttendance } from '../../../app/firestore/firestoreService';
+import {
+	addUserAttendance,
+	cancelUserAttendance,
+} from '../../../app/firestore/firestoreService';
 
 const eventImageStyle = {
 	filter: 'brightness(30%)',
@@ -26,6 +29,18 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
 
 		try {
 			await addUserAttendance(event);
+		} catch (err) {
+			toast.error(err.message);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	async function userLeaveEventHandler() {
+		setLoading(true);
+
+		try {
+			await cancelUserAttendance(event);
 		} catch (err) {
 			toast.error(err.message);
 		} finally {
@@ -65,14 +80,16 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
 				{!isHost && (
 					<>
 						{isGoing ? (
-							<Button>Cancel My Place</Button>
+							<Button loading={loading} onClick={userLeaveEventHandler}>
+								Cancel my place
+							</Button>
 						) : (
 							<Button
 								color='pink'
 								loading={loading}
 								onClick={userJoinEventHandler}
 							>
-								JOIN THIS EVENT
+								Join this event
 							</Button>
 						)}
 					</>
