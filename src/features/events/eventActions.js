@@ -48,3 +48,10 @@ export function deleteEvent(eventId) {
 		payload: eventId,
 	};
 }
+
+export function listenToEventChat(comments) {
+	return {
+		type: 'LISTEN_TO_EVENT_CHAT',
+		payload: comments,
+	};
+}

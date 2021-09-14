@@ -2,12 +2,10 @@ import { sampleData } from '../../app/api/sampleData';
 
 const initialState = {
 	events: [],
+	comments: [],
 };
 
-export default function eventReducer(
-	state = initialState,
-	{ type, payload }
-) {
+export default function eventReducer(state = initialState, { type, payload }) {
 	switch (type) {
 		case 'CREATE_EVENT':
 			return {
@@ -34,6 +32,12 @@ export default function eventReducer(
 			return {
 				...state,
 				events: payload,
+			};
+
+		case 'LISTEN_TO_EVENT_CHAT':
+			return {
+				...state,
+				comments: payload,
 			};
 
 		default:
