@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-	Button,
-	Comment,
-	Form,
-	Header,
-	Segment,
-} from 'semantic-ui-react';
+import { Button, Comment, Form, Header, Segment } from 'semantic-ui-react';
+import EventDetailedChatForm from './EventDetailedChatForm';
 
-export default function EventDetailedChat() {
+export default function EventDetailedChat({ eventId }) {
 	return (
 		<>
 			<Segment
@@ -45,8 +40,7 @@ export default function EventDetailedChat() {
 							</Comment.Metadata>
 							<Comment.Text>
 								<p>
-									This has been very useful for my research. Thanks as
-									well!
+									This has been very useful for my research. Thanks as well!
 								</p>
 							</Comment.Text>
 							<Comment.Actions>
@@ -61,9 +55,7 @@ export default function EventDetailedChat() {
 									<Comment.Metadata>
 										<div>Just now</div>
 									</Comment.Metadata>
-									<Comment.Text>
-										Elliot you are always so right :)
-									</Comment.Text>
+									<Comment.Text>Elliot you are always so right :)</Comment.Text>
 									<Comment.Actions>
 										<Comment.Action>Reply</Comment.Action>
 									</Comment.Actions>
@@ -79,24 +71,14 @@ export default function EventDetailedChat() {
 							<Comment.Metadata>
 								<div>5 days ago</div>
 							</Comment.Metadata>
-							<Comment.Text>
-								Dude, this is awesome. Thanks so much
-							</Comment.Text>
+							<Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
 							<Comment.Actions>
 								<Comment.Action>Reply</Comment.Action>
 							</Comment.Actions>
 						</Comment.Content>
 					</Comment>
 
-					<Form reply>
-						<Form.TextArea />
-						<Button
-							content='Add Reply'
-							labelPosition='left'
-							icon='edit'
-							primary
-						/>
-					</Form>
+					<EventDetailedChatForm eventId={eventId} />
 				</Comment.Group>
 			</Segment>
 		</>
