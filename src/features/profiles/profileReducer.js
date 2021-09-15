@@ -3,6 +3,8 @@ const initialState = {
 	selectedUserProfile: null,
 	photos: [],
 	profileEvents: [],
+	followers: [],
+	followings: [],
 };
 
 export default function profileReducer(
@@ -32,6 +34,17 @@ export default function profileReducer(
 			return {
 				...state,
 				profileEvents: payload,
+			};
+
+		case 'LISTEN_TO_FOLLOWERS':
+			return {
+				...state,
+				followers: payload,
+			};
+		case 'LISTEN_TO_FOLLOWINGS':
+			return {
+				...state,
+				followings: payload,
 			};
 
 		default: {

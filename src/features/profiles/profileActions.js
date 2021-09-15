@@ -25,3 +25,17 @@ export function listenToUserEvents(events) {
 		payload: events,
 	};
 }
+
+export function listenToFollowers(followers) {
+	return {
+		type: 'LISTEN_TO_FOLLOWERS',
+		payload: followers,
+	};
+}
+
+export function listenToFollowings(followings) {
+	return {
+		type: 'LISTEN_TO_FOLLOWINGS',
+		payload: followings,
+	};
+}
