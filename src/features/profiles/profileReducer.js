@@ -5,6 +5,7 @@ const initialState = {
 	profileEvents: [],
 	followers: [],
 	followings: [],
+	followingUser: false,
 };
 
 export default function profileReducer(
@@ -41,10 +42,23 @@ export default function profileReducer(
 				...state,
 				followers: payload,
 			};
+			
 		case 'LISTEN_TO_FOLLOWINGS':
 			return {
 				...state,
 				followings: payload,
+			};
+
+		case 'SET_FOLLOW_USER':
+			return {
+				...state,
+				followingUser: true,
+			};
+
+		case 'SET_UNFOLLOW_USER':
+			return {
+				...state,
+				followingUser: false,
 			};
 
 		default: {

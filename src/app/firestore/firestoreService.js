@@ -306,3 +306,14 @@ export function getFollowersCollection(profileId) {
 export function getFollowingCollection(profileId) {
 	return db.collection('following').doc(profileId).collection('userFollowing');
 }
+
+export function getFollowingDoc(profileId) {
+	const userUid = firebase.auth().currentUser.uid;
+
+	return db
+		.collection('following')
+		.doc(userUid)
+		.collection('userFollowing')
+		.doc(profileId)
+		.get();
+}

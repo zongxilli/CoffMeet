@@ -39,3 +39,15 @@ export function listenToFollowings(followings) {
 		payload: followings,
 	};
 }
+
+export function setFollowUser() {
+	return {
+		type: 'SET_FOLLOW_USER',
+	};
+}
+
+export function setUnfollowUser() {
+	return {
+		type: 'SET_UNFOLLOW_USER',
+	};
+}

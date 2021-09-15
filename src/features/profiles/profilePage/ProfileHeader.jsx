@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import {
 	Button,
@@ -12,17 +13,43 @@ import {
 } from 'semantic-ui-react';
 import {
 	followUser,
+	getFollowingDoc,
 	unfollowUser,
 } from '../../../app/firestore/firestoreService';
+import { setFollowUser, setUnfollowUser } from '../profileActions';
 
 export default function ProfileHeader({ profile, isCurrentUser }) {
+	const dispatch = useDispatch();
+	const { followingUser } = useSelector((state) => state.profile);
+
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		if (isCurrentUser) return;
+
+		setLoading(true);
+
+		async function fetchFollowingDoc() {
+			try {
+				const followingDoc = await getFollowingDoc(profile.id);
+
+				if (followingDoc && followingDoc.exists) {
+					dispatch(setFollowUser());
+				}
+			} catch (err) {
+				toast.error(err.message);
+			}
+		}
+
+		fetchFollowingDoc().then(() => setLoading(false));
+	}, [dispatch, profile.id, isCurrentUser]);
 
 	async function followUserHandler() {
 		setLoading(true);
 
 		try {
 			await followUser(profile);
+			dispatch(setFollowUser());
 		} catch (err) {
 			toast.error(err.message);
 		} finally {
@@ -35,6 +62,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 
 		try {
 			await unfollowUser(profile);
+			dispatch(setUnfollowUser());
 		} catch (err) {
 			toast.error(err.message);
 		} finally {
@@ -65,8 +93,8 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 				</Grid.Column>
 				<Grid.Column width={4}>
 					<Statistic.Group>
-						<Statistic label='Followers' value={10} />
-						<Statistic label='Following' value={5} />
+						<Statistic label='Followers' value={profile.followerCount || 0} />
+						<Statistic label='Following' value={profile.followingCount || 0} />
 					</Statistic.Group>
 
 					{!isCurrentUser && (
@@ -74,27 +102,27 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 							<Divider />
 							<Reveal animated='move'>
 								<Reveal.Content visible style={{ width: '100%' }}>
-									<Button fluid color='teal' content='Following' />
+									<Button
+										fluid
+										color='teal'
+										content={followingUser ? 'Following' : 'Not following'}
+									/>
 								</Reveal.Content>
 								<Reveal.Content hidden style={{ width: '100%' }}>
 									<Button
 										basic
 										fluid
-										color='green'
-										content='Follow'
+										color={followingUser ? 'red' : 'green'}
+										content={followingUser ? 'Unfollow' : 'Follow'}
 										loading={loading}
-										onClick={followUserHandler}
+										onClick={
+											followingUser
+												? () => unfollowUserHandler()
+												: () => followUserHandler()
+										}
 									/>
 								</Reveal.Content>
 							</Reveal>
-							<Button
-								basic
-								fluid
-								color='red'
-								content='Unfollow'
-								loading={loading}
-								onClick={unfollowUserHandler}
-							/>
 						</>
 					)}
 				</Grid.Column>
