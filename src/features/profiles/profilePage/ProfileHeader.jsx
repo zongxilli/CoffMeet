@@ -10,7 +10,10 @@ import {
 	Segment,
 	Statistic,
 } from 'semantic-ui-react';
-import { followUser } from '../../../app/firestore/firestoreService';
+import {
+	followUser,
+	unfollowUser,
+} from '../../../app/firestore/firestoreService';
 
 export default function ProfileHeader({ profile, isCurrentUser }) {
 	const [loading, setLoading] = useState(false);
@@ -20,6 +23,18 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 
 		try {
 			await followUser(profile);
+		} catch (err) {
+			toast.error(err.message);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	async function unfollowUserHandler() {
+		setLoading(true);
+
+		try {
+			await unfollowUser(profile);
 		} catch (err) {
 			toast.error(err.message);
 		} finally {
@@ -72,6 +87,14 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 									/>
 								</Reveal.Content>
 							</Reveal>
+							<Button
+								basic
+								fluid
+								color='red'
+								content='Unfollow'
+								loading={loading}
+								onClick={unfollowUserHandler}
+							/>
 						</>
 					)}
 				</Grid.Column>

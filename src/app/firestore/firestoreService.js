@@ -236,9 +236,9 @@ export async function followUser(profile) {
 
 		await db
 			.collection('following')
-			.doc(profile.uid)
+			.doc(profile.id)
 			.collection('userFollowers')
-			.doc(user.id)
+			.doc(user.uid)
 			.set({
 				displayName: user.displayName,
 				photoURL: user.photoURL,
@@ -257,6 +257,42 @@ export async function followUser(profile) {
 			.doc(profile.id)
 			.update({
 				followerCount: firebase.firestore.FieldValue.increment(1),
+			});
+	} catch (err) {
+		throw err;
+	}
+}
+
+export async function unfollowUser(profile) {
+	const user = firebase.auth().currentUser;
+
+	try {
+		await db
+			.collection('following')
+			.doc(user.uid)
+			.collection('userFollowing')
+			.doc(profile.id)
+			.delete();
+
+		await db
+			.collection('following')
+			.doc(profile.id)
+			.collection('userFollowers')
+			.doc(user.uid)
+			.delete();
+
+		await db
+			.collection('users')
+			.doc(user.uid)
+			.update({
+				followingCount: firebase.firestore.FieldValue.increment(-1),
+			});
+
+		return await db
+			.collection('users')
+			.doc(profile.id)
+			.update({
+				followerCount: firebase.firestore.FieldValue.increment(-1),
 			});
 	} catch (err) {
 		throw err;
