@@ -50,7 +50,11 @@ export default function EventDetailedChat({ eventId }) {
 			</Segment>
 
 			<Segment attached>
-				<EventDetailedChatForm eventId={eventId} parentId={0} />
+				<EventDetailedChatForm
+					eventId={eventId}
+					parentId={0}
+					closeForm={setShowReplyForm}
+				/>
 
 				<Comment.Group>
 					{createDataTree(comments).map((comment) => (
