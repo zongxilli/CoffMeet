@@ -7,7 +7,6 @@ import {
 	Grid,
 	Header,
 	Item,
-	Reveal,
 	Segment,
 	Statistic,
 } from 'semantic-ui-react';

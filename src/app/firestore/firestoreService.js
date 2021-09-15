@@ -221,43 +221,44 @@ export function getUserEventsQuery(activeTab, userUid) {
 
 export async function followUser(profile) {
 	const user = firebase.auth().currentUser;
+	const batch = db.batch();
 
 	try {
-		await db
-			.collection('following')
-			.doc(user.uid)
-			.collection('userFollowing')
-			.doc(profile.id)
-			.set({
+		batch.set(
+			db
+				.collection('following')
+				.doc(user.uid)
+				.collection('userFollowing')
+				.doc(profile.id),
+			{
 				displayName: profile.displayName,
 				photoURL: profile.photoURL,
 				uid: profile.id,
-			});
+			}
+		);
 
-		await db
-			.collection('following')
-			.doc(profile.id)
-			.collection('userFollowers')
-			.doc(user.uid)
-			.set({
+		batch.set(
+			db
+				.collection('following')
+				.doc(profile.id)
+				.collection('userFollowers')
+				.doc(user.uid),
+			{
 				displayName: user.displayName,
 				photoURL: user.photoURL,
 				uid: user.uid,
-			});
+			}
+		);
 
-		await db
-			.collection('users')
-			.doc(user.uid)
-			.update({
-				followingCount: firebase.firestore.FieldValue.increment(1),
-			});
+		batch.update(db.collection('users').doc(user.uid), {
+			followingCount: firebase.firestore.FieldValue.increment(1),
+		});
 
-		return await db
-			.collection('users')
-			.doc(profile.id)
-			.update({
-				followerCount: firebase.firestore.FieldValue.increment(1),
-			});
+		batch.update(db.collection('users').doc(profile.id), {
+			followerCount: firebase.firestore.FieldValue.increment(1),
+		});
+
+		return await batch.commit();
 	} catch (err) {
 		throw err;
 	}
@@ -265,35 +266,34 @@ export async function followUser(profile) {
 
 export async function unfollowUser(profile) {
 	const user = firebase.auth().currentUser;
+	const batch = db.batch();
 
 	try {
-		await db
-			.collection('following')
-			.doc(user.uid)
-			.collection('userFollowing')
-			.doc(profile.id)
-			.delete();
+		batch.delete(
+			db
+				.collection('following')
+				.doc(user.uid)
+				.collection('userFollowing')
+				.doc(profile.id)
+		);
 
-		await db
-			.collection('following')
-			.doc(profile.id)
-			.collection('userFollowers')
-			.doc(user.uid)
-			.delete();
+		batch.delete(
+			db
+				.collection('following')
+				.doc(profile.id)
+				.collection('userFollowers')
+				.doc(user.uid)
+		);
 
-		await db
-			.collection('users')
-			.doc(user.uid)
-			.update({
-				followingCount: firebase.firestore.FieldValue.increment(-1),
-			});
+		batch.update(db.collection('users').doc(user.uid), {
+			followingCount: firebase.firestore.FieldValue.increment(-1),
+		});
 
-		return await db
-			.collection('users')
-			.doc(profile.id)
-			.update({
-				followerCount: firebase.firestore.FieldValue.increment(-1),
-			});
+		batch.update(db.collection('users').doc(profile.id), {
+			followerCount: firebase.firestore.FieldValue.increment(-1),
+		});
+
+		return await batch.commit();
 	} catch (err) {
 		throw err;
 	}
