@@ -90,7 +90,7 @@ export default function EventDetailedChat({ eventId }) {
 								</Comment.Actions>
 							</Comment.Content>
 
-							{comment.childNodes.length > 0 && (
+							{comment.childNodes.reverse().length > 0 && (
 								<Comment.Group>
 									{comment.childNodes.map((child) => (
 										<Comment key={child.id}>
