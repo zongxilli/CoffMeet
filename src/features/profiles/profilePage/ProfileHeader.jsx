@@ -42,6 +42,10 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 		}
 
 		fetchFollowingDoc().then(() => setLoading(false));
+
+		return () => {
+			dispatch({ type: 'CLEAR_FOLLOWINGS' });
+		};
 	}, [dispatch, profile.id, isCurrentUser]);
 
 	async function followUserHandler() {
@@ -100,29 +104,24 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 					{!isCurrentUser && (
 						<>
 							<Divider />
-							<Reveal animated='move'>
-								<Reveal.Content visible style={{ width: '100%' }}>
-									<Button
-										fluid
-										color='teal'
-										content={followingUser ? 'Following' : 'Not following'}
-									/>
-								</Reveal.Content>
-								<Reveal.Content hidden style={{ width: '100%' }}>
-									<Button
-										basic
-										fluid
-										color={followingUser ? 'red' : 'green'}
-										content={followingUser ? 'Unfollow' : 'Follow'}
-										loading={loading}
-										onClick={
-											followingUser
-												? () => unfollowUserHandler()
-												: () => followUserHandler()
-										}
-									/>
-								</Reveal.Content>
-							</Reveal>
+							<Button
+								animated='fade'
+								style={{ width: '100%' }}
+								loading={loading}
+								onClick={
+									followingUser
+										? () => unfollowUserHandler()
+										: () => followUserHandler()
+								}
+								color={followingUser ? 'pink' : 'teal'}
+							>
+								<Button.Content visible>
+									{followingUser ? 'Following' : 'Not following'}
+								</Button.Content>
+								<Button.Content hidden>
+									{followingUser ? 'Unfollow' : 'Follow'}
+								</Button.Content>
+							</Button>
 						</>
 					)}
 				</Grid.Column>

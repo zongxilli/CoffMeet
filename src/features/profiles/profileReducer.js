@@ -42,7 +42,7 @@ export default function profileReducer(
 				...state,
 				followers: payload,
 			};
-			
+
 		case 'LISTEN_TO_FOLLOWINGS':
 			return {
 				...state,
@@ -59,6 +59,13 @@ export default function profileReducer(
 			return {
 				...state,
 				followingUser: false,
+			};
+
+		case 'CLEAR_FOLLOWINGS':
+			return {
+				...state,
+				followers: [],
+				followings: [],
 			};
 
 		default: {
