@@ -4,7 +4,9 @@ import { setUserProfileData } from './firestoreService';
 
 export function formatFirebaseDataToArray(snapshot) {
 	if (snapshot) {
-		return Object.entries(snapshot).map(e => Object.assign({}, e[1], {id: e[0]}))
+		return Object.entries(snapshot).map((e) =>
+			Object.assign({}, e[1], { id: e[0] })
+		);
 	}
 }
 
@@ -79,16 +81,16 @@ export function deleteFromFirebaseStorage(filename) {
 	return photoRef.delete();
 }
 
-export function addEventChatComment(eventId, comment) {
+export function addEventChatComment(eventId, values) {
 	const user = firebase.auth().currentUser;
 	const newComment = {
 		displayName: user.displayName,
 		photoURL: user.photoURL,
 		uid: user.uid,
-		text: comment,
+		text: values.comment,
 		date: Date.now(),
+		parentId: values.parentId,
 	};
-
 	return firebase.database().ref(`chat/${eventId}`).push(newComment);
 }
 

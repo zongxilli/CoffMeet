@@ -40,6 +40,12 @@ export default function eventReducer(state = initialState, { type, payload }) {
 				comments: payload,
 			};
 
+		case 'CLEAR_COMMENTS':
+			return {
+				...state,
+				comments: [],
+			};
+
 		default:
 			return state;
 	}
