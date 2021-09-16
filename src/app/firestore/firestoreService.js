@@ -276,7 +276,7 @@ export function getFollowingCollection(profileId) {
 
 export function getFollowingDoc(profileId) {
 	const userUid = firebase.auth().currentUser.uid;
-
+	
 	return db
 		.collection('following')
 		.doc(userUid)

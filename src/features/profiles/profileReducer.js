@@ -68,6 +68,12 @@ export default function profileReducer(
 				followings: [],
 			};
 
+		case 'CLEAR_FOLLOWING_USER_BUG_FIX':
+			return {
+				...state,
+				followingUser: false,
+			};
+
 		default: {
 			return state;
 		}

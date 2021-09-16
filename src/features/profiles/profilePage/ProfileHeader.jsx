@@ -25,8 +25,11 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		if (isCurrentUser) return;
 
+		if (isCurrentUser) return;
+		
+		console.log('触发了 - 加载前');
+		dispatch({ type: 'CLEAR_FOLLOWING_USER_BUG_FIX' });
 		setLoading(true);
 
 		async function fetchFollowingDoc() {
@@ -34,6 +37,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 				const followingDoc = await getFollowingDoc(profile.id);
 
 				if (followingDoc && followingDoc.exists) {
+					console.log('Set了Following');
 					dispatch(setFollowUser());
 				}
 			} catch (err) {
@@ -45,6 +49,8 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 
 		return () => {
 			dispatch({ type: 'CLEAR_FOLLOWINGS' });
+			console.log('触发了 - 离开页面');
+			dispatch({ type: 'CLEAR_FOLLOWING_USER_BUG_FIX' });
 		};
 	}, [dispatch, profile.id, isCurrentUser]);
 
@@ -104,7 +110,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 					{!isCurrentUser && (
 						<>
 							<Divider />
-							<Reveal animated='move right' instant >
+							<Reveal animated='move' instant>
 								<Reveal.Content visible style={{ width: '100%' }}>
 									<Button
 										fluid
@@ -119,7 +125,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 												? () => unfollowUserHandler()
 												: () => followUserHandler()
 										}
-										basic
+										
 										fluid
 										loading={loading}
 										color={followingUser ? 'violet' : 'teal'}
