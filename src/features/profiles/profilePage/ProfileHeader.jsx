@@ -104,11 +104,10 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 					{!isCurrentUser && (
 						<>
 							<Divider />
-							<Reveal animated='move'>
+							<Reveal animated='move right' instant >
 								<Reveal.Content visible style={{ width: '100%' }}>
 									<Button
 										fluid
-										loading={loading}
 										color={followingUser ? 'teal' : 'violet'}
 										content={followingUser ? 'Following' : 'Not following'}
 									/>
