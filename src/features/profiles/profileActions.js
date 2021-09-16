@@ -51,3 +51,10 @@ export function setUnfollowUser() {
 		type: 'SET_UNFOLLOW_USER',
 	};
 }
+
+export function listenToFeed(feed) {
+	return {
+		type: 'LISTEN_TO_FEED',
+		payload: feed,
+	};
+}

@@ -9,7 +9,7 @@ import {
 
 // Dependencies
 import React, { useState } from 'react';
-import { Button, Container, Menu } from 'semantic-ui-react';
+import { Button, Container, Icon, Menu } from 'semantic-ui-react';
 import { NavLink, useHistory } from 'react-router-dom';
 import SignedOutMenu from './SignedOutMenu';
 import SignedInMenu from './SignedInMenu';
@@ -36,7 +36,12 @@ export default function NavBar({ setFormOpen }) {
 				<Menu.Item as={NavLink} to='/sandbox' name='Sandbox' />
 				{authenticated && (
 					<Menu.Item as={NavLink} to='/createEvent'>
-						<Button positive inverted content='Create Event' />
+						<Button animated='fade' inverted color='teal'>
+							<Button.Content visible>Create Event</Button.Content>
+							<Button.Content hidden>
+								<Icon name='angle down' size='large' />
+							</Button.Content>
+						</Button>
 					</Menu.Item>
 				)}
 				{authenticated ? <SignedInMenu /> : <SignedOutMenu />}

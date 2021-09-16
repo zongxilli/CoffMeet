@@ -6,6 +6,7 @@ const initialState = {
 	followers: [],
 	followings: [],
 	followingUser: false,
+	feed: [],
 };
 
 export default function profileReducer(
@@ -66,6 +67,12 @@ export default function profileReducer(
 				...state,
 				followers: [],
 				followings: [],
+			};
+
+		case 'LISTEN_TO_FEED':
+			return {
+				...state,
+				feed: payload,
 			};
 
 		case 'CLEAR_FOLLOWING_USER_BUG_FIX':

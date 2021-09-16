@@ -114,7 +114,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 								<Reveal.Content visible style={{ width: '100%' }}>
 									<Button
 										fluid
-										color={followingUser ? 'teal' : 'violet'}
+										color={followingUser ? 'teal' : ''}
 										content={followingUser ? 'Following' : 'Not following'}
 									/>
 								</Reveal.Content>
@@ -128,7 +128,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 										
 										fluid
 										loading={loading}
-										color={followingUser ? 'violet' : 'teal'}
+										color={followingUser ? '' : 'teal'}
 										content={followingUser ? 'Unfollow' : 'Follow'}
 									/>
 								</Reveal.Content>
