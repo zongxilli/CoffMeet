@@ -7,6 +7,7 @@ import {
 	Grid,
 	Header,
 	Item,
+	Reveal,
 	Segment,
 	Statistic,
 } from 'semantic-ui-react';
@@ -103,24 +104,30 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 					{!isCurrentUser && (
 						<>
 							<Divider />
-							<Button
-								animated='fade'
-								style={{ width: '100%' }}
-								loading={loading}
-								onClick={
-									followingUser
-										? () => unfollowUserHandler()
-										: () => followUserHandler()
-								}
-								color={followingUser ? 'pink' : 'teal'}
-							>
-								<Button.Content visible>
-									{followingUser ? 'Following' : 'Not following'}
-								</Button.Content>
-								<Button.Content hidden>
-									{followingUser ? 'Unfollow' : 'Follow'}
-								</Button.Content>
-							</Button>
+							<Reveal animated='move'>
+								<Reveal.Content visible style={{ width: '100%' }}>
+									<Button
+										fluid
+										loading={loading}
+										color={followingUser ? 'teal' : 'violet'}
+										content={followingUser ? 'Following' : 'Not following'}
+									/>
+								</Reveal.Content>
+								<Reveal.Content hidden style={{ width: '100%' }}>
+									<Button
+										onClick={
+											followingUser
+												? () => unfollowUserHandler()
+												: () => followUserHandler()
+										}
+										basic
+										fluid
+										loading={loading}
+										color={followingUser ? 'violet' : 'teal'}
+										content={followingUser ? 'Unfollow' : 'Follow'}
+									/>
+								</Reveal.Content>
+							</Reveal>
 						</>
 					)}
 				</Grid.Column>
