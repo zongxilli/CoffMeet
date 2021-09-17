@@ -83,8 +83,8 @@ export default function EventDetailedChat({ eventId }) {
 									>
 										Reply
 									</Comment.Action>
-									{showReplyForm.open &&
-										showReplyForm.commentId === comment.id && (
+									{showReplyForm?.open &&
+										showReplyForm?.commentId === comment.id && (
 											<EventDetailedChatForm
 												eventId={eventId}
 												parentId={comment.id}
@@ -127,8 +127,8 @@ export default function EventDetailedChat({ eventId }) {
 													>
 														Reply
 													</Comment.Action>
-													{showReplyForm.open &&
-														showReplyForm.commentId === child.id && (
+													{showReplyForm?.open &&
+														showReplyForm?.commentId === child.id && (
 															<EventDetailedChatForm
 																eventId={eventId}
 																parentId={child.parentId}

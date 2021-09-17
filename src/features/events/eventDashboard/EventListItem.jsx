@@ -47,16 +47,26 @@ export default function EventListItem({ event }) {
 				<div>{event.description}</div>
 				<Button
 					floated='right'
-					content='Delete'
+					animated='vertical'
 					onClick={() => deleteEventInFirestore(event.id)}
-				/>
+				>
+					<Button.Content visible>Delete</Button.Content>
+					<Button.Content hidden>
+						<Icon name='delete' />
+					</Button.Content>
+				</Button>
 				<Button
+					floated='right'
+					animated='fade'
 					as={Link}
 					to={`/events/${event.id}`}
 					color='pink'
-					floated='right'
-					content='View'
-				/>
+				>
+					<Button.Content visible>View</Button.Content>
+					<Button.Content hidden>
+						<Icon name='angle double right' />
+					</Button.Content>
+				</Button>
 			</Segment>
 		</Segment.Group>
 	);

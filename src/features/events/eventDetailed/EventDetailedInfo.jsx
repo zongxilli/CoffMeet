@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import EventDetailedMap from './EventDetailedMap';
 
 export default function EventDetailedInfo({ event }) {
-	const [mapOpen, setMapOpen] = useState(false);
+	const [mapOpen, setMapOpen] = useState(true);
 
 	return (
 		<Segment.Group>

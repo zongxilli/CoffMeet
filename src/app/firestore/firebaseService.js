@@ -17,6 +17,8 @@ export function signInWithEmail(creds) {
 }
 
 export function signOutFirebase() {
+	//! Me Add 
+	getUserFeedRef()?.off();
 	return firebase.auth().signOut();
 }
 
@@ -102,6 +104,7 @@ export function getEventChatRef(eventId) {
 export function getUserFeedRef() {
 	const user = firebase.auth().currentUser;
 
+	//! Me Add if statement, because user always sign out before getUserFeedRef().off() => user -> null
 	if (user) {
 		return firebase
 			.database()

@@ -39,7 +39,7 @@ export default function NavBar({ setFormOpen }) {
 						<Button animated='fade' inverted color='teal'>
 							<Button.Content visible>Create Event</Button.Content>
 							<Button.Content hidden>
-								<Icon name='angle down' size='large' />
+								<Icon name='coffee'  />
 							</Button.Content>
 						</Button>
 					</Menu.Item>

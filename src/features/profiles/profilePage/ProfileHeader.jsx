@@ -6,6 +6,7 @@ import {
 	Divider,
 	Grid,
 	Header,
+	Icon,
 	Item,
 	Reveal,
 	Segment,
@@ -25,9 +26,8 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-
 		if (isCurrentUser) return;
-		
+
 		console.log('触发了 - 加载前');
 		dispatch({ type: 'CLEAR_FOLLOWING_USER_BUG_FIX' });
 		setLoading(true);
@@ -103,8 +103,14 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 				</Grid.Column>
 				<Grid.Column width={4}>
 					<Statistic.Group>
-						<Statistic label='Followers' value={profile.followerCount || 0} />
-						<Statistic label='Following' value={profile.followingCount || 0} />
+						<Statistic horizontal color='teal'>
+							<Statistic.Value>{profile.followingCount || 0}</Statistic.Value>
+							<Statistic.Label>Following</Statistic.Label>
+						</Statistic>
+						<Statistic horizontal color='teal'>
+							<Statistic.Value>{profile.followerCount || 0}</Statistic.Value>
+							<Statistic.Label>Followers</Statistic.Label>
+						</Statistic>
 					</Statistic.Group>
 
 					{!isCurrentUser && (
@@ -114,22 +120,21 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 								<Reveal.Content visible style={{ width: '100%' }}>
 									<Button
 										fluid
-										color={followingUser ? 'teal' : ''}
+										color={followingUser ? 'teal' : 'grey'}
 										content={followingUser ? 'Following' : 'Not following'}
 									/>
 								</Reveal.Content>
 								<Reveal.Content hidden style={{ width: '100%' }}>
 									<Button
+										fluid
+										loading={loading}
+										color={followingUser ? 'grey' : 'teal'}
+										content={followingUser ? 'Unfollow' : 'Follow'}
 										onClick={
 											followingUser
 												? () => unfollowUserHandler()
 												: () => followUserHandler()
 										}
-										
-										fluid
-										loading={loading}
-										color={followingUser ? '' : 'teal'}
-										content={followingUser ? 'Unfollow' : 'Follow'}
 									/>
 								</Reveal.Content>
 							</Reveal>
