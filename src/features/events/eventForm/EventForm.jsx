@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, Confirm, Header, Segment } from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listenToEvents } from '../eventActions';
+import { listenToSelectedEvent } from '../eventActions';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextInputComponent from '../../../app/common/form/TextInputComponent';
@@ -28,10 +28,7 @@ export default function EventForm({ match, history }) {
 	const [loadingCancel, setLoadingCancel] = useState(false);
 	const [confirmOpen, setConfirmOpen] = useState(false);
 
-	const selectedEvent = useSelector((state) =>
-		state.event.events.find((evt) => evt.id === match.params.id)
-	);
-
+	const { selectedEvent } = useSelector((state) => state.event);
 	const { loading, error } = useSelector((state) => state.async);
 
 	const initialValues = selectedEvent ?? {
@@ -51,19 +48,13 @@ export default function EventForm({ match, history }) {
 
 	const validationSchema = Yup.object({
 		title: Yup.string().required('You forget to provide TITLE :)'),
-		category: Yup.string().required(
-			'You forget to select CATEGORY :)'
-		),
-		description: Yup.string().required(
-			'You forget to provide DESCRIPTION :)'
-		),
+		category: Yup.string().required('You forget to select CATEGORY :)'),
+		description: Yup.string().required('You forget to provide DESCRIPTION :)'),
 		city: Yup.object().shape({
 			address: Yup.string().required('You forget to provide CITY :)'),
 		}),
 		venue: Yup.object().shape({
-			address: Yup.string().required(
-				'You forget to provide VENUE :)'
-			),
+			address: Yup.string().required('You forget to provide VENUE :)'),
 		}),
 		date: Yup.string().required('You forget to select DATE :)'),
 	});
@@ -84,8 +75,8 @@ export default function EventForm({ match, history }) {
 	useFirestoreDoc({
 		shouldExecute: !!match.params.id,
 		query: () => listenToEventFromFirestore(match.params.id),
-		data: (event) => dispatch(listenToEvents([event])),
-		deps: [match.params.id],
+		data: (event) => dispatch(listenToSelectedEvent(event)),
+		deps: [dispatch, match.params.id],
 	});
 
 	if (loading) return <LoadingComponent content='Loading event...' />;
@@ -114,10 +105,7 @@ export default function EventForm({ match, history }) {
 					<Form className='ui form'>
 						<Header sub color='teal' content='Event Details' />
 
-						<TextInputComponent
-							name='title'
-							placeholder='Event title'
-						/>
+						<TextInputComponent name='title' placeholder='Event title' />
 						<SelectInputComponent
 							name='category'
 							placeholder='Category'
@@ -128,11 +116,7 @@ export default function EventForm({ match, history }) {
 							placeholder='Description'
 							rows={5}
 						/>
-						<Header
-							sub
-							color='teal'
-							content='Event Location Details'
-						/>
+						<Header sub color='teal' content='Event Location Details' />
 						<PlaceInputComponent name='city' placeholder='City' />
 						<PlaceInputComponent
 							name='venue'

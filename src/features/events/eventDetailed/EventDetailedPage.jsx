@@ -8,15 +8,13 @@ import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
-import { listenToEvents } from '../eventActions';
 import { Redirect } from 'react-router-dom';
+import { listenToSelectedEvent } from '../eventActions';
 
 export default function EventDetailedPage({ match }) {
 	const dispatch = useDispatch();
 
-	const event = useSelector((state) =>
-		state.event.events.find((evt) => evt.id === match.params.id)
-	);
+	const event = useSelector((state) => state.event.selectedEvent);
 	const { loading, error } = useSelector((state) => state.async);
 	const { currentUser } = useSelector((state) => state.auth);
 
@@ -25,7 +23,7 @@ export default function EventDetailedPage({ match }) {
 
 	useFirestoreDoc({
 		query: () => listenToEventFromFirestore(match.params.id),
-		data: (event) => dispatch(listenToEvents([event])),
+		data: (event) => dispatch(listenToSelectedEvent(event)),
 		deps: [match.params.id],
 	});
 
