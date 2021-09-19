@@ -6,12 +6,11 @@ import { openModal } from '../../app/common/modals/modalReducer';
 
 export default function UnauthModal({ history, setModalOpen }) {
 	const dispatch = useDispatch();
-
 	const { prevLocation } = useSelector((state) => state.auth);
 
 	const [open, setOpen] = useState(true);
 
-	const closeHandler = () => {
+	function closeHandler() {
 		if (!history) {
 			setOpen(false);
 			setModalOpen(false);
@@ -25,13 +24,13 @@ export default function UnauthModal({ history, setModalOpen }) {
 		}
 
 		setOpen(false);
-	};
+	}
 
-	const openLoginModalHandler = (modalType) => {
+	function openLoginModalHandler(modalType) {
 		dispatch(openModal({ modalType }));
 		setOpen(false);
 		setModalOpen(false);
-	};
+	}
 
 	return (
 		<Modal open={open} size='mini' onClose={closeHandler}>

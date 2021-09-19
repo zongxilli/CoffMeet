@@ -10,7 +10,7 @@ export default function EventDetailedMap({ latLng }) {
 	const zoom = 14;
 
 	return (
-		<Segment attached='button' style={{ padding: 0 }}>
+		<Segment attached='bottom' style={{ padding: 0 }}>
 			<div style={{ height: 300, width: '100%' }}>
 				<GoogleMapReact
 					bootstrapURLKeys={{

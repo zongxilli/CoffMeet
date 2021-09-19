@@ -15,7 +15,7 @@ export default function EventDetailedSidebar({ attendees, hostUid }) {
 			>
 				{attendees.length} {attendees.length > 1 ? 'People' : 'Person'} Going
 			</Segment>
-			<Segment attached>
+			<Segment attached='bottom'>
 				<Item.Group relaxed divided>
 					{attendees.map((attendee) => (
 						<Item
