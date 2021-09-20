@@ -1,6 +1,6 @@
 # Social meet & chat React application
 ### [Link to this App](https://coffmeet.netlify.app/)
-> Full-stack real-time app mainly using React, Redux, Google APIs(Maps, OAuth), Firebase(Authentication, Firestore Database, Realtime Database, Storage, Cloud Functions), Semantic UI
+> Real-time social app mainly using React, Redux, Google APIs(Maps, OAuth), Firebase(Authentication, Firestore Database, Realtime Database, Storage, Cloud Functions), Semantic UI
 
 > Full-featured social events app. Users can create their own meeting events with customized pictures(drag and drop, resizing, cropping), locations(Google maps inside, autocomplete integration) and event details. Also, other users are able to see and join any events showing on the main page with infinite scrolling pagination...
 
