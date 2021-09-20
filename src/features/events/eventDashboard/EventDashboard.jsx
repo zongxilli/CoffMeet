@@ -38,6 +38,10 @@ export default function EventDashboard() {
 
 	return (
 		<Grid>
+			<Grid.Column width={6}>
+				{authenticated && <EventsFeed />}
+				<EventFilters loading={loading} />
+			</Grid.Column>
 			<Grid.Column width={10}>
 				{loadingInitial && (
 					<>
@@ -51,10 +55,6 @@ export default function EventDashboard() {
 					loading={loading}
 					moreEvents={moreEvents}
 				/>
-			</Grid.Column>
-			<Grid.Column width={6}>
-				{authenticated && <EventsFeed />}
-				<EventFilters loading={loading} />
 			</Grid.Column>
 			<Grid.Column width={10}>
 				<Loader active={loading} />

@@ -6,7 +6,6 @@ import {
 	Divider,
 	Grid,
 	Header,
-	Icon,
 	Item,
 	Reveal,
 	Segment,

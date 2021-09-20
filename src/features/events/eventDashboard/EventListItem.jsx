@@ -50,7 +50,9 @@ export default function EventListItem({ event }) {
 					animated='vertical'
 					onClick={() => deleteEventInFirestore(event.id)}
 				>
-					<Button.Content visible>Delete</Button.Content>
+					<Button.Content visible>
+					Delete
+					</Button.Content>
 					<Button.Content hidden>
 						<Icon name='delete' />
 					</Button.Content>
@@ -62,7 +64,10 @@ export default function EventListItem({ event }) {
 					to={`/events/${event.id}`}
 					color='pink'
 				>
-					<Button.Content visible>View</Button.Content>
+					<Button.Content visible>
+						View{' '}
+						<Icon name='angle double right' />
+					</Button.Content>
 					<Button.Content hidden>
 						<Icon name='angle double right' />
 					</Button.Content>

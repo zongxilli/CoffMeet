@@ -11,7 +11,7 @@ export default function EventDetailedInfo({ event }) {
 			<Segment attached='top'>
 				<Grid>
 					<Grid.Column width={1}>
-						<Icon size='large' color='pink' name='info' />
+						<Icon name='feed' size='large' color='teal' />
 					</Grid.Column>
 					<Grid.Column width={15}>
 						<p>{event.description}</p>
@@ -21,7 +21,7 @@ export default function EventDetailedInfo({ event }) {
 			<Segment attached>
 				<Grid verticalAlign='middle'>
 					<Grid.Column width={1}>
-						<Icon name='calendar' size='large' color='pink' />
+						<Icon name='ticket' size='large' color='teal' />
 					</Grid.Column>
 					<Grid.Column width={15}>
 						<span>{format(event.date, 'MMMM d, yyyy h:mm a')}</span>
@@ -31,18 +31,30 @@ export default function EventDetailedInfo({ event }) {
 			<Segment attached>
 				<Grid verticalAlign='middle'>
 					<Grid.Column width={1}>
-						<Icon name='marker' size='large' color='pink' />
+						<Icon name='road' size='large' color='teal' />
 					</Grid.Column>
 					<Grid.Column width={11}>
 						<span>{event.venue.address}</span>
 					</Grid.Column>
 					<Grid.Column width={4}>
 						<Button
+							fluid
 							color='teal'
 							size='tiny'
-							content={mapOpen ? 'Hide map' : 'Open map'}
+							animated='vertical'
 							onClick={() => setMapOpen(!mapOpen)}
-						/>
+						>
+							<Button.Content hidden>
+								{mapOpen ? (
+									<Icon name='angle double up' />
+								) : (
+									<Icon name='angle double down' />
+								)}
+							</Button.Content>
+							<Button.Content visible>
+								{mapOpen ? 'Hide map' : 'Open map'}
+							</Button.Content>
+						</Button>
 					</Grid.Column>
 				</Grid>
 			</Segment>

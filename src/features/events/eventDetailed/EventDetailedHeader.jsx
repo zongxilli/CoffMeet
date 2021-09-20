@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Header, Image, Item, Segment } from 'semantic-ui-react';
+import { Button, Header, Icon, Image, Item, Segment } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 
@@ -118,11 +118,26 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
 							as={Link}
 							to={`/manage/${event.id}`}
 							color='teal'
-							floated='right'
+							floated='left'
 						>
 							Manage Event
 						</Button>
 					)}
+
+					<Button
+						as={Link}
+						to='/events'
+						animated='fade'
+						floated='right'
+						color='orange'
+					>
+						<Button.Content visible>
+							<Icon name='angle double left' /> Back
+						</Button.Content>
+						<Button.Content hidden>
+							<Icon name='angle double left' />
+						</Button.Content>
+					</Button>
 				</Segment>
 			</Segment.Group>
 		</>

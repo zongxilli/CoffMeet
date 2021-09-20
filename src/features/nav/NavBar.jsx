@@ -1,21 +1,16 @@
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faReact,
-	faChrome,
-	faHornbill,
-	faScribd,
-} from '@fortawesome/free-brands-svg-icons';
+import { faReact } from '@fortawesome/free-brands-svg-icons';
 
 // Dependencies
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Container, Icon, Menu } from 'semantic-ui-react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import SignedOutMenu from './SignedOutMenu';
 import SignedInMenu from './SignedInMenu';
 import { useSelector } from 'react-redux';
 
-export default function NavBar({ setFormOpen }) {
+export default function NavBar() {
 	const { authenticated } = useSelector((state) => state.auth);
 
 	return (
@@ -39,7 +34,7 @@ export default function NavBar({ setFormOpen }) {
 						<Button animated='fade' inverted color='teal'>
 							<Button.Content visible>Create Event</Button.Content>
 							<Button.Content hidden>
-								<Icon name='coffee'  />
+								<Icon name='coffee' />
 							</Button.Content>
 						</Button>
 					</Menu.Item>

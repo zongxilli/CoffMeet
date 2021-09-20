@@ -31,7 +31,7 @@ export default function EventsFeed() {
 
 	return (
 		<>
-			<Header attached color='teal' icon='newspaper' content='News feed' />
+			<Header attached color='purple' icon='newspaper' content='News feed' />
 			<Segment attached='bottom'>
 				<Feed>
 					{feed.map((post) => (
