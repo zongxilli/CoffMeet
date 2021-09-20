@@ -15,6 +15,7 @@ export default function SocialLogin() {
 	return (
 		<>
 			<Button
+				disabled
 				icon='facebook'
 				fluid
 				color='facebook'
