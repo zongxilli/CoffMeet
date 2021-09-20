@@ -1,7 +1,7 @@
 import React from 'react';
 import EventListItem from './EventListItem';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Header } from 'semantic-ui-react';
+import { Button, Header, Icon } from 'semantic-ui-react';
 
 export default function EventList({
 	events,
@@ -21,7 +21,20 @@ export default function EventList({
 					{events.map((event) => (
 						<EventListItem event={event} key={event.id} />
 					))}
-					<Header content='Scroll down for more events' />
+					<Header as='h3'>
+						{moreEvents
+							? 'Scroll down for more events : )'
+							: 'You have reached the end of events : )'}
+						{!moreEvents && (
+							<Button
+								size='mini'
+								color='teal'
+								floated='right'
+								content='Back to top'
+								onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+							/>
+						)}
+					</Header>
 				</InfiniteScroll>
 			)}
 		</>

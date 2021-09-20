@@ -20,10 +20,6 @@ export default function EventDashboard() {
 	const [loadingInitial, setLoadingInitial] = useState(false);
 
 	useEffect(() => {
-
-	})
-
-	useEffect(() => {
 		if (retainState) return;
 
 		setLoadingInitial(true);
@@ -37,7 +33,10 @@ export default function EventDashboard() {
 	}, [dispatch, filter, startDate, retainState]);
 
 	function fetchNextEventsHandler() {
-		dispatch(fetchEvents(filter, startDate, limit, lastVisible));
+		//! Me Add timeout to make scrolling real
+		setTimeout(() => {
+			dispatch(fetchEvents(filter, startDate, limit, lastVisible));
+		}, 300);
 	}
 
 	return (
