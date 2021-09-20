@@ -3,6 +3,10 @@ const initialState = {
 	comments: [],
 	moreEvents: true,
 	selectedEvent: null,
+	lastVisible: null,
+	filter: 'all',
+	startDate: new Date(),
+	retainState: false,
 };
 
 export default function eventReducer(state = initialState, { type, payload }) {
@@ -33,6 +37,7 @@ export default function eventReducer(state = initialState, { type, payload }) {
 				...state,
 				events: [...state.events, ...payload.events],
 				moreEvents: payload.moreEvents,
+				lastVisible: payload.lastVisible,
 			};
 
 		case 'LISTEN_TO_EVENT_CHAT':
@@ -58,6 +63,29 @@ export default function eventReducer(state = initialState, { type, payload }) {
 				...state,
 				events: [],
 				moreEvents: true,
+				lastVisible: null,
+			};
+
+		case 'SET_FILTER':
+			return {
+				...state,
+				retainState: false,
+				moreEvents: true,
+				filter: payload,
+			};
+
+		case 'SET_START_DATE':
+			return {
+				...state,
+				retainState: false,
+				moreEvents: true,
+				startDate: payload,
+			};
+
+		case 'RETAIN_STATE':
+			return {
+				...state,
+				retainState: true,
 			};
 
 		default:
