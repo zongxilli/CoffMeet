@@ -74,30 +74,36 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 							{photos.map((photo) => (
 								<Card key={photo.id}>
 									<Image src={photo.url} />
-									<Button.Group fluid width={2}>
-										<Button
-											basic
-											name={photo.id}
-											color='green'
-											content='Main'
-											loading={
-												updating.isUpdating && updating.target === photo.id
-											}
-											disabled={photo.url === profile.photoURL}
-											onClick={(e) => setMainPhotoHandler(photo, e.target.name)}
-										/>
-										<Button
-											basic
-											name={photo.id}
-											color='red'
-											icon='trash'
-											loading={
-												deleting.isDeleting && deleting.target === photo.id
-											}
-											disabled={photo.url === profile.photoURL}
-											onClick={(e) => deletePhotoHandler(photo, e.target.name)}
-										/>
-									</Button.Group>
+									{isCurrentUser && (
+										<Button.Group fluid width={2}>
+											<Button
+												basic
+												name={photo.id}
+												color='green'
+												content='Main'
+												loading={
+													updating.isUpdating && updating.target === photo.id
+												}
+												disabled={photo.url === profile.photoURL}
+												onClick={(e) =>
+													setMainPhotoHandler(photo, e.target.name)
+												}
+											/>
+											<Button
+												basic
+												name={photo.id}
+												color='red'
+												icon='trash'
+												loading={
+													deleting.isDeleting && deleting.target === photo.id
+												}
+												disabled={photo.url === profile.photoURL}
+												onClick={(e) =>
+													deletePhotoHandler(photo, e.target.name)
+												}
+											/>
+										</Button.Group>
+									)}
 								</Card>
 							))}
 						</Card.Group>
