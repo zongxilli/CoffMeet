@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Header, Modal, Progress } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import { openModal } from '../../app/common/modals/modalReducer';
 import TestMap from './TestMap';
 import TestPlaceInput from './TestPlaceInput';

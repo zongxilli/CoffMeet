@@ -7,9 +7,9 @@ export default function TestMap({ location }) {
 	return (
 		// Important! Always set the container height explicitly
 		<div style={{ height: '100vh', width: '100%' }}>
-			<GoogleMapReact
+			{/* <GoogleMapReact
 				bootstrapURLKeys={{
-					key: 'AIzaSyAX-Nnd3cXgu14-wJfIRAOrzA4XOMKaaPQ',
+					key: process.env.REACT_APP_API_KEY,
 				}}
 				center={location.center}
 				zoom={location.zoom}
@@ -19,7 +19,7 @@ export default function TestMap({ location }) {
 					lng={location.center.lng}
 					text='My Marker'
 				/>
-			</GoogleMapReact>
+			</GoogleMapReact> */}
 		</div>
 	);
 }
