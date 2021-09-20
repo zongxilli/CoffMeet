@@ -1,7 +1,7 @@
 import React from 'react';
 import EventListItem from './EventListItem';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Button, Header, Icon } from 'semantic-ui-react';
+import { Button, Header } from 'semantic-ui-react';
 
 export default function EventList({
 	events,
