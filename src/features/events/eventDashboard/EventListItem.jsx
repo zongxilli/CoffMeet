@@ -1,11 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Icon, Item, Label, List, Segment } from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee';
 import { format } from 'date-fns';
+
 import { deleteEventInFirestore } from '../../../app/firestore/firestoreService';
 
 export default function EventListItem({ event }) {
+	const dispatch = useDispatch();
+
+	const { authenticated, currentUser } = useSelector((state) => state.auth);
+
 	return (
 		<Segment.Group>
 			<Segment>
@@ -45,18 +51,23 @@ export default function EventListItem({ event }) {
 			</Segment>
 			<Segment clearing>
 				<div>{event.description}</div>
-				{/* <Button
+				<Button
 					floated='right'
 					animated='vertical'
-					onClick={() => deleteEventInFirestore(event.id)}
+					disabled={!authenticated || currentUser.uid !== event.hostUid}
+					onClick={() => {
+						deleteEventInFirestore(event.id);
+
+						//! Me Add
+						dispatch({ type: 'DELETE_EVENT', payload: event.id });
+						//! -----------------------------------------------------------
+					}}
 				>
-					<Button.Content visible>
-					Delete
-					</Button.Content>
+					<Button.Content visible>Delete</Button.Content>
 					<Button.Content hidden>
 						<Icon name='delete' />
 					</Button.Content>
-				</Button> */}
+				</Button>
 				<Button
 					floated='right'
 					animated='fade'
@@ -65,8 +76,7 @@ export default function EventListItem({ event }) {
 					color='pink'
 				>
 					<Button.Content visible>
-						View{' '}
-						<Icon name='angle double right' />
+						View <Icon name='angle double right' />
 					</Button.Content>
 					<Button.Content hidden>
 						<Icon name='angle double right' />

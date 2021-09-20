@@ -65,7 +65,7 @@ export default function EventForm({ match, history, location }) {
 		date: Yup.string().required('You forget to select DATE :)'),
 	});
 
-	async function handleCancelToggle(event) {
+	async function cancelToggleHandler(event) {
 		setConfirmOpen(false);
 		setLoadingCancel(true);
 
@@ -103,6 +103,12 @@ export default function EventForm({ match, history, location }) {
 							? await updateEventInFirestore(values)
 							: await addEventToFirestore(values);
 						setSubmitting(false);
+
+						//! Me Add
+						dispatch({ type: 'CLEAR_EVENTS' });
+						dispatch({ type: 'RETAIN_STATE_SET_TO_FALSE_FIX_BUG' });
+						//! -----------------------------------------------------------
+						
 						history.push('/events');
 					} catch (err) {
 						toast.error(err.message);
@@ -187,7 +193,7 @@ export default function EventForm({ match, history, location }) {
 				}
 				open={confirmOpen}
 				onCancel={() => setConfirmOpen(false)}
-				onConfirm={() => handleCancelToggle(selectedEvent)}
+				onConfirm={() => cancelToggleHandler(selectedEvent)}
 			/>
 		</Segment>
 	);

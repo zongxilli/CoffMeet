@@ -20,6 +20,10 @@ export default function EventDashboard() {
 	const [loadingInitial, setLoadingInitial] = useState(false);
 
 	useEffect(() => {
+
+	})
+
+	useEffect(() => {
 		if (retainState) return;
 
 		setLoadingInitial(true);

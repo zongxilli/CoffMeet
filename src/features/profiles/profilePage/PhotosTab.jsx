@@ -36,6 +36,11 @@ export default function PhotosTab({ profile, isCurrentUser }) {
 			toast.error(err.message);
 		} finally {
 			setUpdating({ isUpdating: false, target: null });
+
+			//! Me Add
+			dispatch({ type: 'CLEAR_EVENTS' });
+			dispatch({ type: 'RETAIN_STATE_SET_TO_FALSE_FIX_BUG' });
+			//! -----------------------------------------------------------
 		}
 	}
 

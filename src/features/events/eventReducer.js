@@ -94,6 +94,12 @@ export default function eventReducer(state = initialState, { type, payload }) {
 				retainState: true,
 			};
 
+		case 'RETAIN_STATE_SET_TO_FALSE_FIX_BUG':
+			return {
+				...state,
+				retainState: false,
+			};
+
 		default:
 			return state;
 	}
