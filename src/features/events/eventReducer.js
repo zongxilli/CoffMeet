@@ -58,6 +58,12 @@ export default function eventReducer(state = initialState, { type, payload }) {
 				selectedEvent: payload,
 			};
 
+		case 'CLEAR_SELECTED_EVENT':
+			return {
+				...state,
+				selectedEvent: null,
+			};
+
 		case 'CLEAR_EVENTS':
 			return {
 				...state,

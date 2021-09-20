@@ -45,7 +45,7 @@ export default function EventListItem({ event }) {
 			</Segment>
 			<Segment clearing>
 				<div>{event.description}</div>
-				<Button
+				{/* <Button
 					floated='right'
 					animated='vertical'
 					onClick={() => deleteEventInFirestore(event.id)}
@@ -56,7 +56,7 @@ export default function EventListItem({ event }) {
 					<Button.Content hidden>
 						<Icon name='delete' />
 					</Button.Content>
-				</Button>
+				</Button> */}
 				<Button
 					floated='right'
 					animated='fade'

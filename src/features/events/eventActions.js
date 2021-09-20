@@ -88,3 +88,9 @@ export function clearEvents() {
 		type: 'CLEAR_EVENTS',
 	};
 }
+
+export function clearSelectedEvent() {
+	return {
+		type: 'CLEAR_SELECTED_EVENT',
+	};
+}
