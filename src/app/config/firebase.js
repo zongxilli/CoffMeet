@@ -5,7 +5,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/storage';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyAX-Nnd3cXgu14-wJfIRAOrzA4XOMKaaPQ',
+	apiKey: process.env.REACT_APP_API_KEY,
 	authDomain: 'coffmeet.firebaseapp.com',
 	projectId: 'coffmeet',
 	storageBucket: 'coffmeet.appspot.com',
