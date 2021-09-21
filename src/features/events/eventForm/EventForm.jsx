@@ -71,6 +71,7 @@ export default function EventForm({ match, history, location }) {
 
 		try {
 			await cancelEventToggle(event);
+
 			setLoadingCancel(false);
 		} catch (err) {
 			setLoadingCancel(false);
@@ -108,7 +109,7 @@ export default function EventForm({ match, history, location }) {
 						dispatch({ type: 'CLEAR_EVENTS' });
 						dispatch({ type: 'RETAIN_STATE_SET_TO_FALSE_FIX_BUG' });
 						//! -----------------------------------------------------------
-						
+
 						history.push('/events');
 					} catch (err) {
 						toast.error(err.message);
@@ -177,7 +178,7 @@ export default function EventForm({ match, history, location }) {
 						<Button
 							disabled={isSubmitting}
 							as={Link}
-							to='/events'
+							to={`/events/${match.params.id}`}
 							type='submit'
 							floated='right'
 							content='Back'
@@ -193,7 +194,10 @@ export default function EventForm({ match, history, location }) {
 				}
 				open={confirmOpen}
 				onCancel={() => setConfirmOpen(false)}
-				onConfirm={() => cancelToggleHandler(selectedEvent)}
+				onConfirm={() => {
+					cancelToggleHandler(selectedEvent);
+					history.push(`/events/${match.params.id}`);
+				}}
 			/>
 		</Segment>
 	);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Header, Icon, Image, Item, Segment } from 'semantic-ui-react';
 import { format } from 'date-fns';
@@ -28,7 +28,6 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
 	const { authenticated } = useSelector((state) => state.auth);
 
 	const [modalOpen, setModalOpen] = useState(false);
-
 	const [loading, setLoading] = useState(false);
 
 	async function userJoinEventHandler() {
