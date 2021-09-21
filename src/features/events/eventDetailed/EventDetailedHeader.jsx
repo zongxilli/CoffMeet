@@ -25,6 +25,8 @@ const eventImageTextStyle = {
 };
 
 export default function EventDetailedHeader({ event, isHost, isGoing }) {
+	const dispatch = useDispatch();
+
 	const { authenticated } = useSelector((state) => state.auth);
 
 	const [modalOpen, setModalOpen] = useState(false);
@@ -35,6 +37,11 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
 
 		try {
 			await addUserAttendance(event);
+
+			//! Me Add
+			dispatch({ type: 'CLEAR_EVENTS' });
+			dispatch({ type: 'RETAIN_STATE_SET_TO_FALSE_FIX_BUG' });
+			//! -----------------------------------------------------------
 		} catch (err) {
 			toast.error(err.message);
 		} finally {
